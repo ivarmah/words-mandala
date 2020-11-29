@@ -1,0 +1,43 @@
+<div class="title">
+  <h2 *ngIf="!started && countOfCategoryWords === 0">
+    Find
+    <ng-container *ngIf="selectedCategory; else defaultCategory">
+      {{selectedCategory}}
+    </ng-container>
+
+    <ng-template #defaultCategory>
+      mandala
+    </ng-template>
+
+    words
+  </h2>
+
+  <h2 *ngIf="started || countOfCategoryWords > 0"
+      [ngClass]="{successfull: countOfCategoryWords === countOfAllCategoryWords}">
+    Found {{countOfCategoryWords}}/{{countOfAllCategoryWords}} of {{selectedCategory}} words
+  </h2>
+  <div ngbDropdown class="d-inline-block " *ngIf="!started">
+    <button class="btn btn-success  category-selector" id="dropdownBasic1" ngbDropdownToggle>
+      <div> Select category</div>
+    </button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+      <button ngbDropdownItem *ngFor="let category of categories"
+              (click)="selectCategory(category)">{{category}}</button>
+    </div>
+  </div>
+</div>
+<div class="actions" *ngIf="selectedCategory">
+  <button type="button" class="btn btn-success" (click)="start()" *ngIf="!started">START</button>
+  <button type="button" class="btn btn-danger" *ngIf="started" (click)="stop()">STOP</button>
+</div>
+<div class="words-mandala" #mandalaWords>
+  <app-word *ngFor="let word of words"
+            [value]="word"
+            [cdkDragData]="word"
+            [selected]="word.selected"
+            cdkDrag
+            cdkDragBoundary=".words-mandala"
+            [ngStyle]="{'left': word.x + 'px', 'top': word.y+ 'px', 'transform': 'rotate('+ word.rotation+ 'deg)'}"
+            (dblclick)="selectWord(word)"></app-word>
+</div>
+
