@@ -13,6 +13,6 @@ export class GoogleSheetUtil {
   }
 
   readData(): Observable<Array<string[]>> {
-    return this.http.get<Array<string[]>>(`http://206.81.27.211/`);
+    return this.http.get<Array<string[]>>(`https://impulseprime.eu/`);
   }
 }
