@@ -36,7 +36,12 @@ export class MandalaComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     const sheetsUtil = new GoogleSheetUtil(this.http);
     CONTAINER_WIDTH = this.mandalaWords.nativeElement.offsetWidth;
-    this.rawWordsData = [['позитивный', 'депрессивный'], ['счастливый', 'негативный'], ['жизненный', 'очтаявшийся'], ['сверкающий', 'угрюмый'], ['дружелюбный', 'кровавый'], ['красивый', 'хмурый'], ['исцеляющий', 'заболевающий'], ['храбрый', 'трус']];
+
+    sheetsUtil.readData().subscribe(data => {
+      console.log('data', data);
+      this.categories = data.shift();
+      this.rawWordsData = data;
+    });
   }
 
   initRawWords(data, headers): MandalaWord[] {

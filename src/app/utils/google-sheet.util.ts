@@ -12,9 +12,7 @@ export class GoogleSheetUtil {
   constructor(private http: HttpClient) {
   }
 
-  readData(spreadsheetId: string, apiKey: string): Observable<Array<string[]>> {
-    return this.http
-      .get(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Sheet1!A1:B1000?key=${apiKey}`)
-      .pipe(map((v: any) => v.values));
+  readData(): Observable<Array<string[]>> {
+    return this.http.get<Array<string[]>>(`http://206.81.27.211/`);
   }
 }
